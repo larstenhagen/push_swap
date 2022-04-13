@@ -6,7 +6,7 @@
 /*   By: ltenhage <ltenhage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/15 10:10:43 by ltenhage          #+#    #+#             */
-/*   Updated: 2022/03/24 17:01:12 by ltenhage         ###   ########.fr       */
+/*   Updated: 2022/04/13 17:40:01 by ltenhage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,17 @@ typedef struct s_numbers
 	struct s_numbers	*next;
 }				t_numbers;
 
+//checking arguments
 int			ft_check_args(int argc, char **argv);
 
-void		ft_free(char **str);
+void		ft_error(char *message);
+
+//initialising stack_a
+void		index_stack(t_numbers **stack, int size);
+
+void		init_stack(t_numbers **stack, int argc, char **argv);
+
+int			*sort_values(int *values, int size, int number);
 
 //Making / sorting the lists
 t_numbers	*ft2_lstlast(t_numbers *lst);
@@ -45,7 +53,7 @@ void		radix_sort(t_numbers **stack_a, t_numbers **stack_b, int size);
 //all the instrucions
 void		ra(t_numbers **stack, int size);
 
-void		rra(t_numbers	**stack, int size);
+void		rra(t_numbers	**stack);
 
 void		sa(t_numbers **numbers);
 
@@ -67,5 +75,11 @@ int			arraylenght(int	*numbers);
 int			get_min(t_numbers **stack, int val);
 
 int			get_distance(t_numbers **stack, int index);
+
+void		ft_free(char **str);
+
+int			is_sorted(t_numbers **stack, int size);
+
+void		free_stack(t_numbers **stack);
 
 #endif

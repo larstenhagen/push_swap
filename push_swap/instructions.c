@@ -6,7 +6,7 @@
 /*   By: ltenhage <ltenhage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/23 19:05:45 by ltenhage          #+#    #+#             */
-/*   Updated: 2022/03/24 16:59:19 by ltenhage         ###   ########.fr       */
+/*   Updated: 2022/04/13 17:41:38 by ltenhage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ void	ra(t_numbers **stack, int size)
 }
 
 // //takes care of rra and rrb
-void	rra(t_numbers	**stack, int size)
+void	rra(t_numbers **stack_a)
 {
 	t_numbers	*head;
 	t_numbers	*tail;
 
-	if (size < 2)
-		ft_printf("Error");
-	head = *stack;
+	if (ft2_lstsize(*stack_a) < 2)
+		return ;
+	head = *stack_a;
 	tail = ft2_lstlast(head);
 	while (head)
 	{
@@ -74,25 +74,31 @@ void	rra(t_numbers	**stack, int size)
 		}
 		head = head->next;
 	}
-	tail->next = *stack;
-	*stack = tail;
+	tail->next = *stack_a;
+	*stack_a = tail;
 	ft_printf("rra\n");
 }
 
 // // takes care of sa and sb
-void	sa(t_numbers **numbers)
+void	sa(t_numbers **stack_a)
 {
-	int			temp;
-	int			temp2;
 	t_numbers	*head;
+	t_numbers	*next;
+	int			tmp_val;
+	int			tmp_index;
 
-	head = *numbers;
-	temp = head->index;
-	head = head->next;
-	temp2 = head->index;
-	head->index = temp;
-	head = *numbers;
-	head->index = temp2;
+	if (ft2_lstsize(*stack_a) < 2)
+		return ;
+	head = *stack_a;
+	next = head->next;
+	if (!head && !next)
+		ft_error("Error occured while swapping!");
+	tmp_val = head->value;
+	tmp_index = head->index;
+	head->value = next->value;
+	head->index = next->index;
+	next->value = tmp_val;
+	next->index = tmp_index;
 	ft_printf("sa\n");
 }
 

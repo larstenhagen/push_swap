@@ -6,12 +6,13 @@
 /*   By: ltenhage <ltenhage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 15:02:44 by ltenhage          #+#    #+#             */
-/*   Updated: 2022/03/24 16:58:54 by ltenhage         ###   ########.fr       */
+/*   Updated: 2022/04/12 16:36:27 by ltenhage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+//The number of the highest number of bits in a present number is returned.
 static int	get_max_bit(t_numbers	**stack)
 {
 	t_numbers	*head;
@@ -32,6 +33,12 @@ static int	get_max_bit(t_numbers	**stack)
 	return (max_bits);
 }
 
+//All the present indexes are iterated and checked per bit,
+//starting from the rightmost bit to the left.
+//By comparing (with '&' bitwise operator) the bits with 1. 
+//The first bit is checked on the presence of 1 instead of 0.
+//When the bit contains 0, it is added to base 2.
+//Eventually all the numbers are set back in order.
 void	radix_sort(t_numbers **stack_a, t_numbers **stack_b, int size)
 {
 	t_numbers	*head_a;
@@ -42,9 +49,6 @@ void	radix_sort(t_numbers **stack_a, t_numbers **stack_b, int size)
 	i = 0;
 	head_a = *stack_a;
 	max_bits = get_max_bit(stack_a);
-	// ra(stack_a, size);
-	// pb(stack_a, stack_b);
-	// pb(stack_a, stack_b);
 	while (i < max_bits)
 	{
 		j = 0;

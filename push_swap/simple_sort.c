@@ -6,13 +6,13 @@
 /*   By: ltenhage <ltenhage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 14:34:25 by ltenhage          #+#    #+#             */
-/*   Updated: 2022/03/24 14:32:29 by ltenhage         ###   ########.fr       */
+/*   Updated: 2022/04/13 17:31:53 by ltenhage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int	is_sorted(t_numbers **stack, int size)
+int	is_sorted(t_numbers **stack, int size)
 {
 	t_numbers	*head;
 	int			*values;
@@ -37,43 +37,38 @@ static int	is_sorted(t_numbers **stack, int size)
 		return (0);
 }
 
-static void	sort_3(t_numbers **stack_a, int size)
+static void	sort_3(t_numbers **stack_a, int size, int min)
 {
 	t_numbers	*head;
-	int			min;
-	int			next_min;
 
 	head = *stack_a;
-	min = get_min(stack_a, -1);
-	next_min = get_min(stack_a, min);
-	if (head->index == min && head->next->index != next_min)
+	if (head->index == min && head->next->index != get_min(stack_a, min))
+	{
+		rra(stack_a);
+		sa(stack_a);
+		return ;
+	}
+	else if (head->index == get_min(stack_a, min))
+	{
+		if (head->next->index == min)
+			sa(stack_a);
+		else
+			rra(stack_a);
+		return ;
+	}
+	if (head->next->index == min)
 	{
 		ra(stack_a, size);
-		sa(stack_a);
-		rra(stack_a, size);
+		return ;
 	}
-	else if (head->index == next_min)
-	{
-		if (head->next->index == min)
-			sa(stack_a);
-		else
-			rra(stack_a, size);
-	}
-	else
-	{
-		if (head->next->index == min)
-			ra(stack_a, size);
-		else
-		{
-			sa(stack_a);
-			rra(stack_a, size);
-		}
-	}
+	sa(stack_a);
+	rra(stack_a);
 }
 
 static void	sort_4(t_numbers **stack_a, t_numbers **stack_b, int size)
 {
-	int	distance;
+	int			distance;
+	t_numbers	*head;
 
 	distance = get_distance(stack_a, get_min(stack_a, -1));
 	if (distance == 1)
@@ -84,11 +79,13 @@ static void	sort_4(t_numbers **stack_a, t_numbers **stack_b, int size)
 		ra(stack_a, size);
 	}
 	else if (distance == 3)
-		rra(stack_a, size);
+		rra(stack_a);
 	if (is_sorted(stack_a, size))
 		return ;
 	pb(stack_a, stack_b);
-	sort_3(stack_a, size);
+	head = *stack_a;
+	if (!is_sorted(stack_a, ft2_lstsize(head)))
+		sort_3(stack_a, size, get_min(stack_a, -1));
 	pa(stack_a, stack_b);
 }
 
@@ -106,11 +103,11 @@ static void	sort_5(t_numbers **stack_a, t_numbers **stack_b, int size)
 	}
 	else if (distance == 3)
 	{
-		rra(stack_a, size);
-		rra(stack_a, size);
+		rra(stack_a);
+		rra(stack_a);
 	}
 	else if (distance == 4)
-		rra(stack_a, size);
+		rra(stack_a);
 	if (is_sorted(stack_a, size))
 		return ;
 	pb(stack_a, stack_b);
@@ -120,16 +117,18 @@ static void	sort_5(t_numbers **stack_a, t_numbers **stack_b, int size)
 
 void	simple_sort(t_numbers **stack_a, t_numbers **stack_b, int size)
 {
+	int	min;
+
+	min = get_min(stack_a, -1);
 	if (is_sorted(stack_a, size) || size == 0 || \
 	size == 1)
 	{
-		ft_printf("numbers are already sorted");
 		return ;
 	}
 	if (size == 2)
 		ra(stack_a, size);
 	else if (size == 3)
-		sort_3(stack_a, size);
+		sort_3(stack_a, size, min);
 	else if (size == 4)
 		sort_4(stack_a, stack_b, size);
 	else if (size == 5)

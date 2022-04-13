@@ -6,7 +6,7 @@
 /*   By: ltenhage <ltenhage@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 12:52:41 by ltenhage          #+#    #+#             */
-/*   Updated: 2022/03/24 16:00:35 by ltenhage         ###   ########.fr       */
+/*   Updated: 2022/04/07 15:08:32 by ltenhage         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,11 @@ int	ft_check_args(int argc, char **argv)
 	if (argc == 2)
 		ft_free(args);
 	return (1);
+}
+
+//exits in case of error
+void	ft_error(char *message)
+{
+	ft_printf("%s\n", message);
+	exit(0);
 }
